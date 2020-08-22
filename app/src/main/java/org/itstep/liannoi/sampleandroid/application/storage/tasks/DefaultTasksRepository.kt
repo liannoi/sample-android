@@ -4,6 +4,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import org.itstep.liannoi.sampleandroid.application.common.exceptions.FetchingTasksException
 import org.itstep.liannoi.sampleandroid.application.common.interfaces.LocalDataSource
 import org.itstep.liannoi.sampleandroid.application.common.interfaces.TasksRepository
 import org.itstep.liannoi.sampleandroid.application.storage.tasks.commands.CreateCommand
@@ -31,7 +32,7 @@ class DefaultTasksRepository constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { handler.onTasksFetchedSuccess(it) },
-                { handler.onTasksFetchedError(it.message.toString()) }
+                { handler.onTasksFetchedError(FetchingTasksException(it.message.toString())) }
             ).follow()
     }
 

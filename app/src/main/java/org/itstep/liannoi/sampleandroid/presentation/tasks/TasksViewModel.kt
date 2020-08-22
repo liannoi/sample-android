@@ -3,13 +3,15 @@ package org.itstep.liannoi.sampleandroid.presentation.tasks
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import org.itstep.liannoi.sampleandroid.application.common.exceptions.FetchingTasksException
 import org.itstep.liannoi.sampleandroid.application.common.interfaces.TasksRepository
 import org.itstep.liannoi.sampleandroid.application.storage.tasks.models.Task
 import org.itstep.liannoi.sampleandroid.application.storage.tasks.queries.ListQuery
 
 class TasksViewModel constructor(
     private val tasksRepository: TasksRepository
-) : ViewModel() {
+) : ViewModel(),
+    ListQuery.Handler {
 
     private val _items: MutableLiveData<List<Task>> = MutableLiveData()
     val items: LiveData<List<Task>> = _items
@@ -18,20 +20,29 @@ class TasksViewModel constructor(
         loadTasks()
     }
 
+    override fun onTasksFetchedSuccess(tasks: List<Task>) {
+        _items.value = tasks
+    }
+
+    override fun onTasksFetchedError(exception: FetchingTasksException) {
+        /* no-op */
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     // Helpers
     ///////////////////////////////////////////////////////////////////////////
 
     private fun loadTasks() {
-        // TODO: 22.08.2020 Replace with a full-fledged handler.
-        tasksRepository.getAll(ListQuery(), object : ListQuery.Handler {
-            override fun onTasksFetchedSuccess(tasks: List<Task>) {
-                _items.value = tasks
-            }
+        tasksRepository.getAll(ListQuery(), this)
+    }
 
-            override fun onTasksFetchedError(exception: String) {
-                /* no-op */
-            }
-        })
+    ///////////////////////////////////////////////////////////////////////////
+    // Disposable
+    ///////////////////////////////////////////////////////////////////////////
+
+    override fun onCleared() {
+        super.onCleared()
+        tasksRepository.stop()
+        tasksRepository.destroy()
     }
 }
