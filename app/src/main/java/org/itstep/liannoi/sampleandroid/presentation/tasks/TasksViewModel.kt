@@ -23,6 +23,7 @@ class TasksViewModel constructor(
     ///////////////////////////////////////////////////////////////////////////
 
     private fun loadTasks() {
+        // TODO: 22.08.2020 Replace with a full-fledged handler.
         tasksRepository.getAll(ListQuery(), object : ListQuery.Handler {
             override fun onTasksFetchedSuccess(tasks: List<Task>) {
                 _items.value = tasks

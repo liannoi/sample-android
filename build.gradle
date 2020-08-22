@@ -46,6 +46,10 @@ ext {
     fragmentKtxVersion = "1.2.5"
     gsonVersion = "2.8.6"
     retrofitVersion = "2.9.0"
-    rxAndroidVersion = '2.1.1'
-    rxJavaVersion = '2.2.19'
+    rxAndroidVersion = "2.1.1"
+    rxJavaVersion = "2.2.19"
+    recyclerVersion = "1.1.0"
+    cardVersion = "1.0.0"
+    archLifecycleVersion = "2.2.0"
+    constraintVersion="1.1.3"
 }

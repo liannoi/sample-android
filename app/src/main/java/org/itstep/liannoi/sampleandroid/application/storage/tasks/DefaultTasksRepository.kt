@@ -16,7 +16,7 @@ import org.itstep.liannoi.sampleandroid.application.storage.tasks.sources.TasksR
 
 class DefaultTasksRepository constructor(
     private val tasksRemoteDataSource: TasksRemoteDataSource,
-    private val tasksLocalDataSource: LocalDataSource<Task, Int>? = null
+    private val tasksLocalDataSource: LocalDataSource<Task, Int>
 ) : TasksRepository {
 
     private val disposable: CompositeDisposable = CompositeDisposable()

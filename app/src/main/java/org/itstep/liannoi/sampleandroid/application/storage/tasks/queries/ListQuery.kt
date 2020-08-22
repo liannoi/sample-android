@@ -8,6 +8,7 @@ class ListQuery {
 
         fun onTasksFetchedSuccess(tasks: List<Task>)
 
+        // TODO: 22.08.2020 Inject own business logic exception.
         fun onTasksFetchedError(exception: String)
     }
 }
